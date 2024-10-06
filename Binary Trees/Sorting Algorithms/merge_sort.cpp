@@ -57,7 +57,7 @@ public:
             }
         }
 
-        if (i > leftSize)
+        if (i == leftSize)
         {
             // This means that the pointer in left Subarray has run out of bounds, but elements are left to be processed in the
             // right subarray , so we run a while loop and push all the elements of right subarray in the main array
@@ -70,7 +70,7 @@ public:
             }
         }
 
-        else if (j > rightSize)
+        else if (j == rightSize)
         {
             // This means the reverse of the above "if" statement. The right subarray pointer has run out of bounds
             while (i < leftSize)
@@ -84,9 +84,7 @@ public:
 
     void mergeSort(int arr[], int st, int end)
     {
-        int N = sizeof(arr) / sizeof(arr[0]);
-
-        if (N == 1)
+        if (st >= end)
             return;
 
         //  Calculate the mid point from where the array is to be divided.
@@ -107,12 +105,23 @@ int main()
 {
 
     int arr[] = {38, 27, 43, 10};
+    int arr2[] = {40, 39, 38, 37, 36, 35};
+    int arr3[] = {1, 5, 1, 3, 2, 10, 2, 4, 8, 7, 7};
+
     int N = sizeof(arr) / sizeof(arr[0]);
+    int N2 = sizeof(arr2) / sizeof(arr2[0]);
+    int N3 = sizeof(arr3) / sizeof(arr3[0]);
 
     Solution s;
-    int start = 0, end = N - 1;
+    int start = 0, end2 = N2 - 1;
+    int end3 = N3 - 1;
 
-    s.mergeSort(arr, start, end);
-    s.printArray(arr, N);
+    s.mergeSort(arr, start, end2);
+    s.mergeSort(arr3, start, end3);
+
+    s.printArray(arr2, N2);
+    cout << endl
+         << "Array 3" << endl;
+    s.printArray(arr3, N3);
     return 0;
 }
