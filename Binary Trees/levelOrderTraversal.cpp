@@ -116,5 +116,12 @@ public:
 int main()
 {
 
-    // write here.
+    Solution s;
+    int arr[] = {8, 5, 4, 7, 3, 2, 6, -1, 5, 4, -1, 1, 3, 2, 1};
+    int N = sizeof(arr) / sizeof(arr[1]);
+    TreeNode *root = s.constructTree(arr, N);
+    auto ans = s.levelOrderTraversal(root);
+    s.printVectorOfVectors(ans);
+
+    return 0;
 }
