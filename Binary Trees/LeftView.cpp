@@ -99,6 +99,23 @@ public:
         return ans;
     }
 
+    // OPTIMAL APPROACH
+
+    void leftSideView2(TreeNode *root, vector<int> &ans, int level)
+    {
+        if (!root)
+            return;
+
+        /* When we visit a particular level, if we are visiting
+        that particular level for the first time, then our data structure's size
+        will be equal to that level variable */
+        if (level == ans.size())
+            ans.push_back(root->val);
+
+        leftSideView2(root->left, ans, level + 1);
+        leftSideView2(root->right, ans, level + 1);
+    }
+
     void printVector(vector<int> &ans)
     {
         for (int &elem : ans)
@@ -112,11 +129,12 @@ public:
 
 int main()
 {
-    int arr[] = {1, 2, 3, 4};
+    int arr[] = {1, 2, 3, 4, 5, 6, 7};
     int N = sizeof(arr) / sizeof(arr[0]);
     Solution sol;
     auto root = sol.constructTree(arr, N);
-    auto ans = sol.leftView(root);
+    vector<int> ans;
+    sol.leftSideView2(root, ans, 0);
     sol.printVector(ans);
 
     return 0;
