@@ -62,41 +62,40 @@ public:
 
         return root;
     }
+
     vector<int> postOrderTraversal(TreeNode *root)
-    { // Post Order Traversal Using 2 Stacks
+    {
+        // Returns the Post order Traversal of BT
+        // using 2 Stacks.
 
         vector<int> ans;
-        if (root == nullptr)
+        if (!root)
             return ans;
 
-        stack<TreeNode *> st1;
-        stack<TreeNode *> st2;
-        st1.push(root);
+        stack<TreeNode *> s1, s2;
+        s1.push(root);
 
-        while (!st1.empty())
+        while (!s1.empty())
         {
+            auto top = s1.top();
+            s1.pop();
+            s2.push(top);
+            if (top->left)
+                s1.push(top->left);
 
-            root = st1.top();
-            st1.pop();
-            st2.push(root);
-
-            if (root->left)
-                st1.push(root->left);
-
-            if (root->right)
-                st1.push(root->right);
+            if (top->right)
+                s1.push(top->right);
         }
 
-        while (!st2.empty())
+        while (!s2.empty())
         {
-
-            ans.push_back(st2.top()->val);
-            st2.pop();
+            auto top = s2.top();
+            s2.pop();
+            ans.push_back(top->val);
         }
 
         return ans;
     }
-
     vector<int> postOrderTraversal2(TreeNode *root)
     {
         vector<int> ans;
@@ -145,4 +144,24 @@ public:
 
         return ans;
     }
+
+    void printVector(vector<int> &vec)
+    {
+        for (int elem : vec)
+        {
+            cout << elem << " ";
+        }
+        cout << endl;
+    }
 };
+
+int main()
+{
+    int arr1[] = {1, 2, 3, 7, 6, 4, 5};
+    int N = sizeof(arr1) / sizeof(arr1[0]);
+    Solution sol;
+    TreeNode *root = sol.constructTree(arr1, N);
+    auto ans = sol.postOrderTraversal(root);
+    sol.printVector(ans);
+    return 0;
+}

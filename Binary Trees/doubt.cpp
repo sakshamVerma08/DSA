@@ -101,6 +101,61 @@ public:
 
         cout << endl;
     }
+
+    vector<int> postOrderTraversal2(TreeNode *root)
+    {
+        vector<int> ans;
+        if (!root)
+            return ans;
+
+        auto curr = root;
+        stack<TreeNode *> st;
+
+        while (!st.empty() || curr != nullptr)
+        {
+
+            // Go Left until you can't
+            if (curr)
+            {
+                st.push(curr);
+                curr = curr->left;
+            }
+
+            // If you can't go left , that means you have to now visit the right Subtree.
+            else
+            {
+                auto temp = st.top()->right;
+
+                if (temp == nullptr)
+                { // If right subtree is NULL, the we have sccanned both left and right, and now we have to push
+                    // the current parent node, which is at top of the stack.
+                    temp = st.top();
+                    st.pop();
+                    ans.push_back(temp->val);
+
+                    // After this we have to check if the current parent nodes' both trees have been visited  or not,
+                    // the new 'current parent node' will be at top of stack.
+
+                    // If the right subtree has not been visited, then this while loop will not be executed.
+                    // The job of this while loop is to keep backtracking.
+
+                    while (!st.empty() && temp == st.top()->right)
+                    {
+                        temp = st.top();
+                        st.pop();
+                        ans.push_back(temp->val);
+                    }
+                }
+
+                // If it is not NULL , just point curr to right subtree.
+                else
+                {
+                    curr = temp;
+                }
+            }
+        }
+        return ans;
+    }
 };
 
 int main()
@@ -110,7 +165,7 @@ int main()
 
     Solution sol;
     TreeNode *root = sol.constructTree(arr, N);
-    auto ans = sol.iterativeInorderTraversal(root);
+    auto ans = sol.postOrderTraversal2(root);
     sol.printVector(ans);
     return 0;
 }
