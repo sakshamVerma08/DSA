@@ -59,6 +59,36 @@ public:
         printReversebyBacktracking(i + 1, N);
         cout << i << "  ";
     }
+
+    int sumofNaturalNumbers(int N, int ans)
+    { // Prints the sum of first N natural numbers. This way , we do use Parameters in Recursion.
+        if (N == 0)
+            return 0;
+
+        sumofNaturalNumbers(N - 1, ans);
+        ans += N;
+
+        return ans;
+    }
+
+    int sumofNaturalNum(int N)
+    {
+        if (N < 1)
+            return 0;
+
+        return (N + sumofNaturalNum(N - 1));
+
+        // This does the same as above, but doesn't use any Parameters.
+    }
+
+    int productofN(int N){
+        // Functionl recursion function that prints the product of first N numbers.
+
+        if (N == 1)
+        return 1;
+
+        return N * productofN(N-1);
+    }
 };
 
 int main()
@@ -66,7 +96,8 @@ int main()
 
     int num = 5;
     Solution sol;
-    sol.printReversebyBacktracking(1, 5);
+    int ans = 0;
+    cout << sol.productofN(5) << endl;
 
     return 0;
 }
