@@ -91,12 +91,12 @@ void printLL(Node *head)
     cout << endl;
 }
 
+
 int main()
 {
     int arr[] = {1, 2, 3};
 
     Node *head = arrayToLL(arr, sizeof(arr) / sizeof(arr[0]));
-
-    searchInLL(head,1);
+    printLL(head);
     return 0;
 }
