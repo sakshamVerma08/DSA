@@ -116,15 +116,3 @@ public:
         return left + right;
     }
 };
-
-int main()
-{
-    Solution sol;
-    int arr[] = {1, 2, 3, 4};
-    int N = sizeof(arr) / sizeof(arr[0]);
-    vector<int> ans;
-    int sum = 3;
-    cout << "Count = " << sol.CountSubsequences(arr, N, 0, sum, 0) << endl;
-    sol.printKSubsequences(arr, ans, N, 0, sum, 0);
-    return 0;
-}
