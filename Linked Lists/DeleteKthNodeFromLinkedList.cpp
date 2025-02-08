@@ -72,6 +72,35 @@ Node *deleteKthNode(Node *head, int k)
         cnt++;
     }
 }
+
+Node *deleteElement(Node *head, int elem)
+{
+    if (head == nullptr)
+        return head;
+
+    if (head->data == elem)
+    {
+        Node *temp = head;
+        head = head->next;
+        delete temp;
+        return head;
+    }
+
+    Node *temp = head;
+    Node *prev = nullptr;
+
+    while (temp != nullptr)
+    {
+        if (temp->data == elem)
+        {
+            prev->next = prev->next->next;
+            delete temp;
+            return head;
+        }
+        prev = temp;
+        temp = temp->next;
+    }
+}
 int main()
 {
     int arr[] = {1, 2, 3, 4, 5};
@@ -79,17 +108,9 @@ int main()
     Node *head = arrayToLinkedList(arr, size);
     Node *head2 = arrayToLinkedList(arr, size);
     Node *head3 = arrayToLinkedList(arr, size);
-    int k1 = 0;
-    int k2 = 4;
-    int k3 = 2;
 
-    head = deleteKthNode(head, k1);
-    head2 = deleteKthNode(head2, k2);
-    head3 = deleteKthNode(head3, k3);
-    cout << "Test case 1: ";
-    printLinkedList(head);
-    cout << "test case 2: ";
-    printLinkedList(head2);
+    head3 = deleteElement(head3, 4);
+
     cout << "test case 3: ";
     printLinkedList(head3);
     return 0;
