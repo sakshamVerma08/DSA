@@ -40,6 +40,7 @@ void printLinkedList(Node *head)
     cout << endl;
 }
 
+
 Node *deleteKthNode(Node *head, int k)
 {
     if (head == nullptr)
@@ -48,26 +49,21 @@ Node *deleteKthNode(Node *head, int k)
     if (k == 0)
     {
         Node *temp = head;
-        head = head->next;
-        delete temp;
-        return head;
+        temp = temp->next;
+        delete head;
+        return temp;
     }
 
     Node *temp = head;
-    Node *prev = nullptr;
     int cnt = 0;
-
-    while (temp != nullptr)
+    while (temp->next != nullptr)
     {
-
-        if (cnt == k)
+        if (cnt == k - 1)
         {
-            prev->next = prev->next->next;
-            delete temp;
+            temp->next = temp->next->next;
             return head;
         }
 
-        prev = temp;
         temp = temp->next;
         cnt++;
     }
@@ -109,9 +105,9 @@ int main()
     Node *head2 = arrayToLinkedList(arr, size);
     Node *head3 = arrayToLinkedList(arr, size);
 
-    head3 = deleteElement(head3, 4);
+    head2 = deleteKthNode(head2, 4);
+    cout << "Test case 2 : \n";
+    printLinkedList(head2);
 
-    cout << "test case 3: ";
-    printLinkedList(head3);
     return 0;
 }
