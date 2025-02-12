@@ -72,10 +72,23 @@ Node *reverseDLL(Node *head)
 }
 
 // This method uses the optimized approach to reverse a DLL.
+
 Node *reverseDLL2(Node *head)
 {
     if (head->prev == nullptr && head->next == nullptr)
         return head;
+
+    Node *last;
+    Node *temp = head;
+    while (temp != nullptr)
+    {
+        last = temp->prev;
+        temp->prev = temp->next;
+        temp->next = last;
+        temp = temp->prev;
+    }
+
+    return last->prev;
 }
 int main()
 {
@@ -86,12 +99,7 @@ int main()
     int size2 = sizeof(arr2) / sizeof(arr2[0]);
 
     Node *head = arrayToDLL(arr, size1);
-    Node *head2 = arrayToDLL(arr2, size2);
-
-    reverseDLL(head);
-    reverseDLL(head2);
-
+    head = reverseDLL2(head);
     printDLL(head);
-    printDLL(head2);
     return 0;
 }
