@@ -82,6 +82,7 @@ Node *insertAtKth(Node *head, int k, int val)
     while (i != k - 1)
     {
         temp = temp->next;
+        i++;
     }
 
     if (temp->next == nullptr)
@@ -98,8 +99,55 @@ Node *insertAtKth(Node *head, int k, int val)
     return head;
 }
 
+Node *deleteAtKth(Node *head, int k)
+{
+    if (k == 1)
+    {
+        if (head == nullptr || head->next == nullptr)
+            return nullptr;
+
+        Node *forward = head->next;
+        delete head;
+        return forward;
+    }
+
+    int i = 1;
+    Node *temp = head;
+
+    while (i != k - 1)
+    {
+        temp = temp->next;
+        i++;
+    }
+    Node *node = temp->next;
+    Node *forward = node->next;
+
+    temp->next = forward;
+    delete node;
+    return head;
+}
+
+// Delete a node withoout having access to the head of the list,just the node.
+// Leetcode Problem Link : https://leetcode.com/problems/delete-node-in-a-linked-list/
+
+void deleteNode(Node *node)
+{
+
+    Node *forward = node->next;
+    node->data = forward->data;
+    node->next = forward->next;
+}
+
+
+
 int main()
 {
 
+    int arr1[] = {1, 2};
+    int size1 = sizeof(arr1) / sizeof(arr1[0]);
+
+    Node *head1 = arrayToLinkedList(arr1, size1);
+    head1 = deleteAtKth(head1, 1);
+    printLinkedList(head1);
     return 0;
 }
