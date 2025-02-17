@@ -90,6 +90,42 @@ Node *reverseDLL2(Node *head)
 
     return last->prev;
 }
+
+
+Node *reverseDLL3(Node *head)
+{
+    if (head == nullptr || (head->prev == nullptr && head->next == nullptr))
+        return head;
+
+    Node *temp = head;
+    Node *temp2 = head;
+
+    int i = 0,j=0;
+
+    while (temp->next != nullptr)
+    {
+        temp = temp->next;
+        i++;
+    }
+
+    int data=0;
+    
+
+    while (i>j)
+    {
+        data = temp2->data;
+
+        temp2->data = temp->data;
+        temp->data = data;
+        temp = temp->prev;
+        temp2 = temp2->next;
+        i--;
+        j++;
+    }
+
+    return head;
+}
+
 int main()
 {
     int arr[] = {75, 122, 59, 196};
