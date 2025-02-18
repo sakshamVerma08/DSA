@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -138,16 +139,81 @@ void deleteNode(Node *node)
     node->next = forward->next;
 }
 
+Node *reverseLL(Node *head)
+{
 
+    if (head == nullptr || head->next == nullptr)
+        return head;
 
+    stack<int> nodeData;
+    Node *temp = head;
+
+    while (temp != nullptr)
+    {
+        nodeData.push(temp->data);
+        temp = temp->next;
+    }
+
+    temp = head;
+    int value;
+    while (temp != nullptr)
+    {
+        value = nodeData.top();
+        temp->data = value;
+        nodeData.pop();
+        temp = temp->next;
+    }
+
+    return head;
+}
+
+Node *reverseLL2(Node *head)
+{
+
+    if (head == nullptr || head->next == nullptr)
+        return head;
+
+    Node *temp = head;
+    Node *prev = nullptr;
+    Node *forward;
+
+    while (temp != nullptr)
+    {
+        forward = temp->next;
+        temp->next = prev;
+        prev = temp;
+        temp = forward;
+    }
+
+    return prev;
+}
+
+Node *reverseLL3(Node *head)
+{
+    if (head == nullptr || head->next == nullptr)
+        return head;
+
+    Node *temp = head->next;
+    Node *newHead = reverseLL3(head->next);
+    temp->next = head;
+    head->next = nullptr;
+    return newHead;
+}
 int main()
 {
 
-    int arr1[] = {1, 2};
+    int arr1[] = {1, 2, 3, 4, 5};
     int size1 = sizeof(arr1) / sizeof(arr1[0]);
 
+    int arr2[] = {3, 2, 1};
+    int size2 = sizeof(arr2) / sizeof(arr2[0]);
+
     Node *head1 = arrayToLinkedList(arr1, size1);
-    head1 = deleteAtKth(head1, 1);
+    Node *head2 = arrayToLinkedList(arr2, size2);
+
+    head2 = reverseLL3(head2);
+    head1 = reverseLL3(head1);
+    printLinkedList(head2);
     printLinkedList(head1);
     return 0;
 }
