@@ -200,6 +200,7 @@ Node *reverseLL3(Node *head)
     return newHead;
 }
 
+// Most Optimized
 void pallindromeList(Node *head)
 {
     if (head == nullptr || head->next == nullptr)
@@ -234,20 +235,55 @@ void pallindromeList(Node *head)
     cout << "True" << endl;
     return;
 }
+
+void pallindromeList2(Node *head)
+{
+    if (head == nullptr || head->next == nullptr)
+    {
+        cout << "True" << endl;
+        return;
+    }
+
+    stack<int> st;
+    Node *slow = head;
+    Node *fast = head;
+
+    while (fast != nullptr && fast->next != nullptr)
+    {
+        fast = fast->next->next;
+        st.push(slow->data);
+        slow = slow->next;
+    }
+
+    while (slow != nullptr)
+    {
+        if (st.top() != slow->data)
+        {
+            cout << "False" << endl;
+            return;
+        }
+
+        st.pop();
+        slow = slow->next;
+    }
+
+    cout << "True" << endl;
+    return;
+}
 int main()
 {
 
-    int arr1[] = {1};
+    int arr1[] = {1, 9, 8, 1};
     int size1 = sizeof(arr1) / sizeof(arr1[0]);
 
-    int arr2[] = {1};
+    int arr2[] = {1,2,3};
     int size2 = sizeof(arr2) / sizeof(arr2[0]);
 
     Node *head1 = arrayToLinkedList(arr1, size1);
     Node *head2 = arrayToLinkedList(arr2, size2);
 
-    pallindromeList(head1);
-    pallindromeList(head2);
+    pallindromeList2(head1);
+    pallindromeList2(head2);
 
     return 0;
 }
