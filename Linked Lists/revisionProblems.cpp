@@ -270,20 +270,156 @@ void pallindromeList2(Node *head)
     cout << "True" << endl;
     return;
 }
+
+void switchOdd(bool &odd)
+{
+    if (odd)
+        odd = false;
+
+    else
+        odd = true;
+}
+Node *segregateOddEven(Node *head)
+{
+    if (head == nullptr || head->next == nullptr)
+        return head;
+
+    Node *d1 = new Node(-1);
+    Node *d2 = new Node(-1);
+
+    Node *c1 = d1;
+    Node *c2 = d2;
+
+    Node *forward;
+    Node *temp = head;
+    bool odd = true;
+
+    while (temp != nullptr)
+    {
+
+        if (odd)
+        {
+            forward = temp->next;
+            temp->next = nullptr;
+            c1->next = temp;
+            c1 = c1->next;
+            temp = forward;
+            switchOdd(odd);
+        }
+
+        else
+        {
+
+            forward = temp->next;
+            temp->next = nullptr;
+            c2->next = temp;
+            c2 = c2->next;
+            temp = forward;
+            switchOdd(odd);
+        }
+    }
+
+    Node *newHead = d1->next;
+    c1->next = d2->next;
+    c2->next = nullptr;
+
+    delete d1;
+    delete d2;
+    return newHead;
+}
+
+Node *removeNFromBack(Node *head, int n)
+{
+    if (head == nullptr)
+        return head;
+
+    if (n == 1 && head->next == nullptr)
+        return nullptr;
+
+    Node *temp = head;
+    int len = 0;
+
+    while (temp != nullptr)
+    {
+        len++;
+        temp = temp->next;
+    }
+
+    if (n == len)
+    {
+        temp = head;
+        head = head->next;
+        delete temp;
+        return head;
+    }
+
+    int index = len - n;
+    int i = 1;
+    temp = head;
+
+    while (temp != nullptr && i != index)
+    {
+        i++;
+        temp = temp->next;
+    }
+
+    Node *del = temp->next;
+    temp->next = del->next;
+    del->next = nullptr;
+    delete del;
+    return head;
+}
+
+Node *removeNFromBack2(Node *head, int n)
+{
+    if (head == nullptr)
+        return head;
+
+    if (n == 1 && head->next == nullptr)
+        return nullptr;
+
+    Node *fast = head;
+
+    for (int i = 0; i < n; i++)
+    {
+        fast = fast->next;
+    }
+
+    if (fast == nullptr)
+    {
+        Node *temp = head;
+        head = head->next;
+        delete temp;
+        return head;
+    }
+
+    Node *slow = head;
+
+    while (fast->next != nullptr)
+    {
+        slow = slow->next;
+        fast = fast->next;
+    }
+
+    Node *del = slow->next;
+    slow->next = del->next;
+    delete del;
+    return head;
+}
 int main()
 {
 
-    int arr1[] = {1, 9, 8, 1};
+    int arr1[] = {1, 2, 3, 4, 5};
     int size1 = sizeof(arr1) / sizeof(arr1[0]);
 
-    int arr2[] = {1,2,3};
+    int arr2[] = {1, 3};
     int size2 = sizeof(arr2) / sizeof(arr2[0]);
 
     Node *head1 = arrayToLinkedList(arr1, size1);
     Node *head2 = arrayToLinkedList(arr2, size2);
 
-    pallindromeList2(head1);
-    pallindromeList2(head2);
+    head1 = removeNFromBack2(head1, 3);
+    printLinkedList(head1);
 
     return 0;
 }
