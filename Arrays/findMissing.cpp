@@ -74,12 +74,42 @@ int findMissing3(vector<int> &a, int N)
     }
 }
 
-int findMissing3(vector<int> &a, int N){
+// Optimized approach 1
+// Time complexity : O(N)
+// Space complexity: O(1)
+int findMissing3(vector<int> &a, int N)
+{
 
+    int sum1 = (N * (N + 1)) / 2;
+    int sum2 = 0;
 
+    for (int i = 0; i < N - 1; i++)
+    {
+        sum2 += a[i];
+    }
+
+    return sum1 - sum2;
 }
 
+// Optimized approach 2
+// Time complexity : O(N)
+// Space complexity : O(1)
+// Slightly better than the Optimized approach 1 .
+int findMissing4(vector<int> &a, int N)
+{
 
+    int xor1 = 0;
+    int xor2 = 0;
+
+    for (int i = 0; i < N - 1; i++)
+    {
+        xor2 = xor2 ^ a[i];
+        xor1 = xor1 ^ (i + 1);
+    }
+
+    xor1 = xor1 ^ N;
+    return (xor1 ^ xor2);
+}
 int main()
 {
 
