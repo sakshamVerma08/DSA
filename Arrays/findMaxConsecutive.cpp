@@ -74,7 +74,7 @@ int main()
 
     vector<int> tc1(10e5, 1);
 
-    cout << "TC 1 : " << findMaxConsecutiveOnes(tc1) << endl;
+    cout << "TC 1 : " << findMaxConsecutiveOnes2(tc1) << endl;
 
     return 0;
 }
