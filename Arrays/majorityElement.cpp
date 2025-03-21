@@ -65,13 +65,6 @@ int majorityElement3(vector<int> &nums)
     return curr;
 }
 
-// Using Bit Manipulation
-// Time complexity: O(N)
-// Space complexity: O(1)
-int majorityElement4(vector<int> &nums)
-{
-    
-}
 int main()
 {
     vector<int> tc1 = {3, 2, 3};
