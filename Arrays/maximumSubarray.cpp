@@ -49,8 +49,27 @@ int maxSubArray2(vector<int> &nums)
     return ans;
 }
 
-int maxSubAray3(vector<int> &nums)
+// using Kadane's algorithm
+// time complexity :O(N)
+// space complexity: O(1)
+int maxSubArray3(vector<int> &nums)
 {
+    long long sum = 0;
+    long maximumSum = INT_MIN;
+
+    for (int i = 0; i < nums.size(); i++)
+    {
+
+        sum += nums[i];
+
+        if (sum > maximumSum)
+            maximumSum = sum;
+
+        if (sum < 0)
+            sum = 0;
+    }
+
+    return maximumSum;
 }
 int main()
 {
