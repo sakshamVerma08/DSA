@@ -66,6 +66,32 @@ int findLHS2(vector<int> &nums)
 
     return (ans == INT_MIN ? 0 : ans);
 }
+
+// Approach using sliding window.
+// time complexity: O(NlogN + N)
+// space complexity : O(1)
+int findLHS3(vector<int> &nums)
+{
+
+    sort(nums.begin(), nums.end());
+
+    int l = 0, r = 1, MaxLen = 0;
+
+    while (l < nums.size())
+    {
+        while (r < nums.size() && abs(nums[r] - nums[l]) <= 1)
+        {
+            if (abs(nums[r] - nums[l]) == 1)
+            {
+                MaxLen = max(MaxLen, r - l + 1);
+            }
+            r++;
+        }
+        l++;
+    }
+
+    return MaxLen;
+}
 int main()
 {
 
