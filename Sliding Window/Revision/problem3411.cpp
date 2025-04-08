@@ -2,54 +2,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> findXSum(vector<int> &nums, int k, int x)
+int getHCF(int a, int b)
 {
-    vector<int> ans;
-    unordered_map<int, int> mpp;
+    if (b == 0)
+        return a;
 
-    for (int i = 0; i < k; i++)
-    {
-        mpp[nums[i]]++;
-    }
+    int rem = a % b;
+    return getHCF(b, rem);
+}
 
-    ans.push_back(calcXSum(mpp, x));
+int maxLength(vector<int> &nums)
+{
 
-    int left = 1;
+    int left = 0, right = 0, ans = INT_MIN, lcm = 1, prod = 1;
     int n = nums.size();
 
-    while (left <= n - k)
+    while (right < n)
     {
-        mpp[nums[left - 1]]--;
-        if (mpp[nums[left - 1]] == 0)
-            mpp.erase(nums[left - 1]);
+        prod *= nums[right];
 
-        mpp[nums[left + k - 1]]++;
-        ans.push_back(calcXSum(mpp, x));
-        left++;
+        if (right - left + 1 < 2)
+            right++;
+
+        else
+        {
+            int gcd = nums[left];
+            gcd = getHCF(nums[right], gcd);
+            lcm = prod / gcd;
+
+            if (prod == gcd * lcm)
+                ans = max(ans, right - left + 1);
+        }
+
+        right++;
     }
 
     return ans;
-}
-
-int calcXSum(unordered_map<int, int> &mpp, int x)
-{
-    priority_queue<pair<int, int>> pq;
-
-    for (auto &p : mpp)
-    {
-        pq.push({p.second, p.first});
-    }
-
-    int sum = 0;
-
-    for (int i = 0; i < x && !pq.empty(); i++)
-    {
-        pair<int, int> top = pq.top();
-        pq.pop();
-        sum += (top.second * top.first);
-    }
-
-    return sum;
 }
 
 int main()
