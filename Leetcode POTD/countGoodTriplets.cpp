@@ -1,0 +1,40 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+// brute force approach
+// time complexity: O(N^3)
+// space complexity: O(1)
+int countGoodTriplets1(vector<int> &arr, int a, int b, int c)
+{
+    int cnt = 0;
+    int n = arr.size();
+
+    for (int i = 0; i < n; i++)
+    {
+
+        for (int j = i + 1; j < n; j++)
+        {
+
+            if (abs(arr[i] - arr[j]) <= a)
+            {
+
+                for (int k = j + 1; k < n; k++)
+                {
+
+                    if (abs(arr[i] - arr[k]) <= c && abs(arr[j] - arr[k]) <= b)
+                        cnt++;
+                }
+            }
+        }
+    }
+
+    return cnt;
+}
+
+
+int main()
+{
+
+    return 0;
+}
