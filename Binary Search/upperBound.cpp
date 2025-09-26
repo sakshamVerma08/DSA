@@ -1,36 +1,38 @@
-#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
 
-int upperBound(vector<int> &nums, int x)
+int findUpperBound(vector<int> nums, int x)
 {
-    int n = nums.size();
-    int low = 0, high = n - 1;
-    int mid, ans = n;
 
-    while (low <= high)
+    int low = 0;
+    int high = nums.size() - 1;
+
+    while (high >= low)
     {
-        mid = (low + high) / 2;
+
+        int mid = (low + high) / 2;
 
         if (nums[mid] > x)
-        {
-            ans = mid;
-            high = mid - 1;
-        }
+            return mid;
 
-        else
+        else if (nums[mid] <= x)
             low = mid + 1;
     }
 
-    return mid;
+    return nums.size();
 }
 
-/*  Similar to lower bound, C++ STL has upper_bound() function
-
-int x = upper_bound(v.begin(),v.end(),n) - v.begin()
-*/
 int main()
 {
+
+    vector<int> v1 = {1, 2, 3, 4, 5};
+    int x1 = 1;
+
+    vector<int> v2 = {1, 1, 1, 1, 1, 1, 2};
+    int x2 = 1;
+
+    cout << "t1 = " << findUpperBound(v1, x1) << endl;
+    cout << "t2 = " << findUpperBound(v2, x2) << endl;
 
     return 0;
 }
