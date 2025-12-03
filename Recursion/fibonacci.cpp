@@ -14,10 +14,8 @@ int fib(int n)
     return fib(n - 1) + fib(n - 2);
 }
 
-int fib2(int n)
+int fib_memo(int n, vector<long long> &dp)
 {
-
-    vector<long long> dp(n + 1, -1);
 
     if (n == 0 || n == 1)
     {
@@ -34,19 +32,26 @@ int fib2(int n)
         else
         {
 
-            long long ans = fib(n - 1) + fib(n - 2);
+            long long ans = fib_memo(n - 1, dp) + fib_memo(n - 2, dp);
             dp[n] = ans;
             return ans;
         }
     }
 }
+int fib2(int n)
+{
+
+    vector<long long> dp(n + 1, -1);
+    return fib_memo(n, dp);
+}
+
 int main()
 {
 
     // 0 0 1 1 2 3 5 8 13 21.....
 
     int n1 = 5;
-    int n2 = 8;
+    int n2 = 20;
 
     cout << "ans1 = " << fib2(n1) << endl;
     cout << "ans2 = " << fib2(n2) << endl;
