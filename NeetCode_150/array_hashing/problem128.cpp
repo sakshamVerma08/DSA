@@ -34,10 +34,48 @@ int longestSequence(vector<int> nums){
         return res;
 }
 
+int longestSequence2(vector<int> nums){
+
+
+	if(nums.size()==0)
+		return 0;
+
+	sort(nums.begin(),nums.end());
+
+	int i = 0, curr = nums[0], streak=0, res=0;
+
+
+	while(i<nums.size()){
+
+
+		if(curr != nums[i]){
+			streak=0;
+			curr=nums[i];
+		}
+
+		
+		while(i<nums.size() && nums[i] == curr){
+			i++;
+
+		}
+
+		streak++;
+		curr++;
+		res=max(res,streak);
+	}
+
+
+	return res;
+
+}
 int main(){
 
 	vector<int> n1 = {100,4,200,1,3,2};
-	cout<<"res = "<< longestSequence(n1)<<endl;
+	cout<<"res = "<< longestSequence2(n1)<<endl;
+	
+	vector<int> n2 = {2,20,4,10,3,4,5};
+	cout<<"res2 = "<< longestSequence2(n2)<<endl;
+
 
 	return 0;
 
