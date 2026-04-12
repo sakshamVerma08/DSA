@@ -4,52 +4,55 @@ using namespace std;
 
 class Solution
 {
+private:
+	using ll = long long;
+	ll ub = 2 * 1e5;
+	int range;
+
+	vector<int> sieve = vector<int>(ub + 1, 1);
+
 public:
-    Solution()
-    {
-    }
+	Solution(int range)
+	{
+		this->range = range;
+		sieve[0] = 0;
+		sieve[1] = 1;
+	}
+	void buildSieve()
+	{
+		for (int i = 2; i * i <= range; i++)
+		{
+			// looping from 2 till sqrt(range) (inclusive).
+			if (sieve[i])
+			{
+				// If the ith number is marked as prime, then mark all it's multiples as non prime.
+				// We start the inner loop from i^2. This is because every element < i^2, had already been marked by some number that ocurred before i, so we can safely start from i^2, rather than starting from 2 for each number.
 
-    vector<int> preCompute(int n)
-    {
-        vector<int> v(n + 1, 1);
+				// In this loop, the increment step is incrementing x by i. Let's take an arbitrary number 'i'.
+				// multiples of i = i , 2 * i, 3 * i, 4 * i....and so on. So we are just simulating this pattern.
+				for (int x = i * i; x <= range; x += i)
+				{
+					sieve[x] = 0;
+				}
+			}
+		}
+	}
 
-        for (int i = 2; i < sqrt(v.size()); i++)
-        {
-
-            if (v[i] == 1)
-            {
-                int mult = i, idx;
-                while (i * mult <= n)
-                {
-                    idx = i * mult;
-                    v[idx] = 0;
-                    mult++;
-                }
-            }
-        }
-        return v;
-    }
-
-    void printPrimes(int n)
-    {
-        auto primes = preCompute(n);
-        for (int i = 2; i < primes.size(); i++)
-        {
-            if (primes[i] == 1)
-                cout << i << " ";
-        }
-        cout << endl;
-        return;
-    }
+	void printPrimes()
+	{
+		buildSieve();
+		for (int i = 2; i <= range; i++)
+		{
+			if (sieve[i])
+				cout << i << ", ";
+		}
+	}
 };
+
 int main()
 {
-    int n1 = 30;
-    int n2 = 60;
-    int n3 = 5 * 1e6;
+	Solution *s = new Solution(500);
+	s->printPrimes();
 
-    Solution s;
-    s.printPrimes(n1);
-
-    return 0;
+	return 0;
 }
