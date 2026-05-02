@@ -4,12 +4,38 @@ using namespace std;
 
 class Solution
 {
+private:
+    int ans = INT_MIN;
+
 public:
     Solution()
     {
     }
     int maxRotateFunction(vector<int> &arr)
     {
+        int n = arr.size();
+        int sum = 0;
+        int f0 = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            // looping from 0 to (n-1) (inclusive).
+            sum += arr[i];
+            f0 += (i * arr[i]);
+        }
+
+        int res = f0;
+
+        for (int k = 0; k < n; k++)
+        {
+            // looping from 0 to (n-1) (inclusive).
+            int newF = f0 + sum - n * arr[n - 1 - k];
+
+            res = max(res, newF);
+            f0 = newF;
+        }
+
+        return res;
     }
 
     vector<int> rotate_array_by_k(vector<int> &arr, int k)
