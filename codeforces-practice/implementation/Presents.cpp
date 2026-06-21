@@ -9,13 +9,34 @@ class Solution{
         }
 
         vector<int> printMapping(vector<int> &arr){
-            vector<int> ans(arr.size(),-1);
-
+            unordered_map<int,int> givers;
             for(int i = 0; i < arr.size(); i++){
-                ans[arr[i]-1] = i+1;
+                givers[i+1] = arr[i];
+            }
+            // [2,3,4,1]
+            /*
+            givers = {
+            1: 2,
+            2: 3,
+            3: 4,
+            4: 1
+            }
+
+            output = {
+                1: 4,
+                2: 1,
+                3: 2,
+                4: 3
+            }
+            */
+            vector<int> ans(arr.size());
+            auto st = givers.begin();
+            auto end = givers.end();
+
+            for(auto it = st; it!= end; it++){
+                ans[it->second-1] = it->first;
             }
             return ans;
-
         }
 
 };
